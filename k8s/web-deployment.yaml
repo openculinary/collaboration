@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collaboration-deployment
+  labels:
+    app: collaboration
+spec:
+  selector:
+    matchLabels:
+      app: collaboration
+      role: web
+  template:
+    metadata:
+      labels:
+        app: collaboration
+        role: web
+    spec:
+      containers:
+      - image: registry.openculinary.org/reciperadar/collaboration
+        imagePullPolicy: IfNotPresent
+        name: collaboration
+        ports:
+        - containerPort: 8000
