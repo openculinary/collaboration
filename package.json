@@ -1,0 +1,9 @@
+{
+  "name": "collaboration",
+  "version": "1.0.0",
+  "description": "collaboration",
+  "dependencies": {
+    "y-websocket": "^1.3.3",
+    "yjs": "^13.2.2"
+  }
+}
