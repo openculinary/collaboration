@@ -15,7 +15,7 @@ deploy:
 	kubectl set image deployments -l app=${SERVICE} ${SERVICE}=${IMAGE_NAME}:${IMAGE_TAG}
 
 image:
-	$(eval container=$(shell buildah from docker.io/library/node:buster))
+	$(eval container=$(shell buildah from docker.io/library/node:alpine))
 	buildah copy $(container) 'package.json'
 	buildah run $(container) -- npm install --no-save --
 	buildah config --port 8000 --env PORT=8000 --entrypoint 'npx /node_modules/y-websocket/bin/server.js' $(container)
