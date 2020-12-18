@@ -17,11 +17,6 @@ deploy:
 image:
 	$(eval container=$(shell buildah from docker.io/library/node:buster))
 	buildah copy $(container) 'package.json'
-	# HACK: Apply workaround from npm/arborist#169 (h/t @nikolaik)
-	buildah run $(container) -- mv /usr/local/lib/node_modules /usr/local/lib/node_modules.tmp --
-	buildah run $(container) -- mv /usr/local/lib/node_modules.tmp /usr/local/lib/node_modules --
-	# HACK: Downgrade to npm 6.x pending npm/arborist#171
-	buildah run $(container) -- npm install -g npm@^6.14.8 --
 	buildah run $(container) -- npm install --no-save --
 	buildah config --cmd 'npx /node_modules/y-websocket/bin/server.js' --env PORT=8000 --port 8000 $(container)
 	buildah commit --quiet --rm --squash $(container) ${IMAGE_NAME}:${IMAGE_TAG}
