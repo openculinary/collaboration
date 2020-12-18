@@ -23,5 +23,5 @@ image:
 	# HACK: Downgrade to npm 6.x pending npm/arborist#171
 	buildah run $(container) -- npm install -g npm@^6.14.8 --
 	buildah run $(container) -- npm install --no-save --
-	buildah config --port 8000 --env PORT=8000 --entrypoint 'npx /node_modules/y-websocket/bin/server.js' $(container)
-	buildah commit --squash --rm $(container) ${IMAGE_NAME}:${IMAGE_TAG}
+	buildah config --cmd 'npx /node_modules/y-websocket/bin/server.js' --env PORT=8000 --port 8000 $(container)
+	buildah commit --quiet --rm --squash $(container) ${IMAGE_NAME}:${IMAGE_TAG}
