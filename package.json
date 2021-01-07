@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "collaboration",
   "dependencies": {
+    "ws": "^7.4.2",
     "y-websocket": "^1.3.9",
     "yjs": "^13.4.9"
   }
