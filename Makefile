@@ -17,6 +17,6 @@ deploy:
 image:
 	$(eval container=$(shell buildah from docker.io/library/node:alpine))
 	buildah copy $(container) 'package.json'
-	buildah run $(container) -- npm install --no-save --
+	buildah run $(container) -- npm install --ignore-scripts --no-save --
 	buildah config --cmd 'npx --package y-websocket -- y-websocket-server' --env HOST=0.0.0.0 --env PORT=8000 --port 8000 $(container)
 	buildah commit --quiet --rm --squash $(container) ${IMAGE_NAME}:${IMAGE_TAG}
