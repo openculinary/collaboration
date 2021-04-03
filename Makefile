@@ -15,8 +15,8 @@ deploy:
 	kubectl set image deployments -l app=${SERVICE} ${SERVICE}=${IMAGE_NAME}:${IMAGE_TAG}
 
 image:
-	$(eval container=$(shell buildah --storage-opt overlay.mount_program=/usr/bin/fuse-overlayfs from docker.io/library/node:alpine))
+	$(eval container=$(shell buildah from docker.io/library/node:alpine))
 	buildah copy $(container) 'package.json'
 	buildah run $(container) -- npm install --ignore-scripts --no-save --
 	buildah config --cmd 'npx --package y-websocket -- y-websocket-server' --env HOST=0.0.0.0 --env PORT=8000 --port 8000 $(container)
-	buildah commit --quiet --rm --squash --storage-opt overlay.mount_program=/usr/bin/fuse-overlayfs $(container) ${IMAGE_NAME}:${IMAGE_TAG}
+	buildah commit --quiet --rm --squash $(container) ${IMAGE_NAME}:${IMAGE_TAG}
